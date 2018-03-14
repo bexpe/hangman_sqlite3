@@ -61,6 +61,7 @@ def read_data_from_db(cursor):
         WHERE player.game_id=game.id ORDER BY score DESC
         """)
     players = cursor.fetchall()
+    print("***********The best scores************")
     for player in players:
         print(player['score'], player['name'])
     print()
