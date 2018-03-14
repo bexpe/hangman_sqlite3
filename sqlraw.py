@@ -3,8 +3,6 @@
 
 import sqlite3
 import game_class
-# utworzenie połączenia z bazą przechowywaną na dysku
-# lub w pamięci (':memory:')
 
 
 def connect_to_db(player):
