@@ -40,22 +40,6 @@ def create_sub_table(cursor):
         )""")
 
 
-def insert_data_into_table(cursor, connection):
-    cursor.execute('INSERT INTO game VALUES(NULL, ?);', ('hangman',))
-    # remember about coma after hangman, its how we create one-piece tuple
-    cursor.execute('SELECT id FROM game WHERE game_name = ?', ('hangman',))
-    game_class.Game.game_id = cursor.fetchone()[0]
-    print(game_class.Game.game_id)
-    players = (
-        (None, 'Tomasz', 250, game_id),
-        (None, 'hangmanger', 1500, game_id),
-        (None, 'Piotr', 5, game_id),
-        (None, 'zeniu9', 0, game_id)
-    )
-    cursor.executemany('INSERT INTO player VALUES(?,?,?,?)', players)
-    connection.commit()
-
-
 def add_to_winners(player, cursor, connection):
     cursor.execute('INSERT INTO game VALUES(NULL, ?);', ('hangman',))
     cursor.execute('SELECT id FROM game WHERE game_name = ?', ('hangman',))
