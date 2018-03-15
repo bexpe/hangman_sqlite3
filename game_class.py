@@ -62,9 +62,10 @@ class Game:
                     else:
                         print("Wrong answer\n")
                         quit()
-            print("Correct guesses: ")
+            print("Correct guesses: ", end=" ")
             for i in correct_guesses:
                 print(i, end=" ")
-            print("Incorrect guesses: ")
+            print(" ")
+            print("Incorrect guesses: ", end=" ")
             for i in incorrect_guesses:
                 print(i, end=" ")
