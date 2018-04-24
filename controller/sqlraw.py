@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3
-import game_class
+import view.game_class
 
 
 def connect_to_db(player):
@@ -13,6 +13,7 @@ def connect_to_db(player):
     create_main_table(cursor)
     create_sub_table(cursor)
     add_to_winners(player, cursor, connection)
+    # delete_data_from_db(cursor, 1)
     read_data_from_db(cursor)
 
 
@@ -38,11 +39,14 @@ def create_sub_table(cursor):
 
 
 def add_to_winners(player, cursor, connection):
+    print(type(player.score))
     cursor.execute('INSERT INTO game VALUES(NULL, ?);', ('hangman',))
     cursor.execute('SELECT id FROM game WHERE game_name = ?', ('hangman',))
     game_id = cursor.fetchone()[0]
+    print(type(player.name[1]))
+    print(game_id)
     players = (
-        (None, player.name, player.score, game_id),
+        (None, player.name[1], player.score, game_id)
     )
     cursor.executemany('INSERT INTO player VALUES(?,?,?,?)', players)
     connection.commit()
@@ -63,13 +67,13 @@ def read_data_from_db(cursor):
     print()
 
 
-def update_data_in_db():
-    # change player game where id = 1
+def delete_data_from_db(cursor, id):
+    cursor.execute('DELETE FROM player WHERE id=?', (id,))
+
+
+def update_data_in_db(cursor):
+    # change player game where id = 2
     cursor.execute('SELECT id FROM game WHERE game_name = ?', ('hangman',))
     game_id = cursor.fetchone()[0]
     cursor.execute('UPDATE player SET game_id=? WHERE id=?', (game_id, 2))
-
-    # delete player with id = 3
-    cursor.execute('DELETE FROM player WHERE id=?', (3,))
-
     read_data_from_db()

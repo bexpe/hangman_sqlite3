@@ -1,5 +1,5 @@
-import player_class
-import sqlraw
+import model.player.player_class
+import controller.sqlraw
 import random
 
 
@@ -10,9 +10,11 @@ class Game:
 
     def run(self):
         words = ['sun', 'holidays', 'summertime', 'fun', 'wind']
+        score = 0
+        lives = 5
         print("Welcome in hangman game!")
         user_name = input("Type your name\n")
-        new_player = player_class.Player(user_name)
+        new_player = model.player.player_class.Player([score, user_name, lives])
         secret = random.choice(words)
         print(secret)
         correct_guesses = set()
@@ -36,7 +38,7 @@ class Game:
                 print(display_word)
                 if display_word == secret:
                     print("Winner!!!")
-                    sqlraw.connect_to_db(new_player)
+                    controller.sqlraw.connect_to_db(new_player)
                     play_again = input("Do you want to play again? y/n\n")
                     if play_again.lower() == "y":
                         break
