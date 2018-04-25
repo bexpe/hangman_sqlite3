@@ -39,12 +39,9 @@ def create_sub_table(cursor):
 
 
 def add_to_winners(player, cursor, connection):
-    print(type(player.score))
     cursor.execute('INSERT INTO game VALUES(NULL, ?);', ('hangman',))
     cursor.execute('SELECT id FROM game WHERE game_name = ?', ('hangman',))
     game_id = cursor.fetchone()[0]
-    print(type(player.name[1]))
-    print(game_id)
     players = (
         (None, player.name[1], player.score, game_id)
     )
