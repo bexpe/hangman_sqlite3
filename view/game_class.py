@@ -9,7 +9,7 @@ class Game:
         self.game_id = 1
 
     def run(self):
-        words = ['sun', 'holidays', 'summertime', 'fun', 'wind']
+        words = ['sun', 'fun']
         score = 0
         lives = 5
         print("Welcome in hangman game!")

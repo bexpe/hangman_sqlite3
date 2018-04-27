@@ -12,8 +12,9 @@ def connect_to_db(player):
     cursor = connection.cursor()  # object of cursor created
     create_main_table(cursor)
     create_sub_table(cursor)
-    add_to_winners(player, cursor, connection)
-    # delete_data_from_db(cursor, 1)
+    # add_to_winners(player, cursor, connection)
+    # delete_data_from_db(cursor, 1, connection) ***** its working but not neccesary now
+    # update_data_in_db(cursor, 3, connection) ***** its working but not neccesary now
     read_data_from_db(cursor)
 
 
@@ -45,7 +46,7 @@ def add_to_winners(player, cursor, connection):
     players = (
         (None, player.name[1], player.score, game_id)
     )
-    cursor.executemany('INSERT INTO player VALUES(?,?,?,?)', players)
+    cursor.execute('INSERT INTO player VALUES(?,?,?,?)', players)
     connection.commit()
 
 
@@ -64,13 +65,15 @@ def read_data_from_db(cursor):
     print()
 
 
-def delete_data_from_db(cursor, id):
+def delete_data_from_db(cursor, id, connection):
     cursor.execute('DELETE FROM player WHERE id=?', (id,))
+    connection.commit()
 
 
-def update_data_in_db(cursor):
+def update_data_in_db(cursor, player_id, connection):
     # change player game where id = 2
     cursor.execute('SELECT id FROM game WHERE game_name = ?', ('hangman',))
     game_id = cursor.fetchone()[0]
-    cursor.execute('UPDATE player SET game_id=? WHERE id=?', (game_id, 2))
-    read_data_from_db()
+    cursor.execute('UPDATE player SET game_id=? WHERE id=?', (5, player_id))
+    connection.commit()
+    read_data_from_db(cursor)
